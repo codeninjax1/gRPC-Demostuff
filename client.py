@@ -15,6 +15,7 @@ class Client(object):
         data = user_pb2.User(**message)
         result = self.stub.userCreate(data)
         print(result)
+        return result.response
 
     def authenticate(self,name,password):
 
@@ -23,6 +24,7 @@ class Client(object):
         result = self.stub.userAuth(data)
         print(result)
         print("auth")
+        return result.response
 
 #client = Client()
 #client.register("harish","test1")

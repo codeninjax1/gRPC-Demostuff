@@ -13,3 +13,6 @@ clear
 ls
 vim client.py 
 suds
+sduo su
+clear
+sudo su
