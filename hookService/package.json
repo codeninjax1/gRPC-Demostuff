@@ -1,0 +1,22 @@
+{
+  "name": "hookservice",
+  "version": "1.0.0",
+  "description": "te",
+  "main": "index.js",
+  "dependencies": {
+    "grpc": "^1.19.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "stsdt",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "stadt"
+  },
+  "keywords": [
+    "sdtst"
+  ]
+}

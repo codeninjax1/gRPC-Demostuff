@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package hook;
+
+service webHook{
+
+rpc hookCreate (User) returns (Response) {}
+rpc hookUpdate (User) returns (Response) {}
+
+}
+
+message User{
+
+string username = 1;
+string link = 2;
+
+}
+
+message Response{
+
+string response = 1;
+
+}
