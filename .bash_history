@@ -16,3 +16,5 @@ suds
 sduo su
 clear
 sudo su
+sduo su
+sudo su
