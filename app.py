@@ -1,6 +1,7 @@
 import falcon
 import json
 from client import Client
+from celery_app import delay_one_min
 
 class UserCreate(object):
     def __init__(self):
@@ -31,6 +32,16 @@ class UserAuth(object):
         else:
             resp.body = json.dumps({"result":"Auth Failed","status":"failed"})
             return
+
+class Hook(object):
+    def on_post(self,req,resp):
+        data =req.stream.read()
+        data =json.loads(data)
+        username = data["username"]
+        callback = data["callback"]
+        random_job = delay_one_min().delay()
+        # code to save the hook
+        resp.body = json.dumps({"result":"callback registered. You'll recieive it once the random job is completed","status":"success"})
 
 app = falcon.API()
 

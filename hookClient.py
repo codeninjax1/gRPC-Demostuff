@@ -14,6 +14,16 @@ class Client(object):
         result = self.stub.hookCreate(data)
         print(result)
 
-c = Client()
-c.create("harish","http://test")
+    def get_hook(self,name):
+        message = {"username":name}
+        data = hook_pb2.Hook(**message)
+        result = self.stub.hookGet(data)
+        output = result.response
+        print("in client hook function")
+        print(output)
+
+if __name__ == "__main__":
+    c = Client()
+    c.create("harish","http://test")
+    c.get_hook("harish")
 

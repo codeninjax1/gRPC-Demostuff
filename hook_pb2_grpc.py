@@ -24,6 +24,11 @@ class webHookStub(object):
         request_serializer=hook__pb2.User.SerializeToString,
         response_deserializer=hook__pb2.Response.FromString,
         )
+    self.hookGet = channel.unary_unary(
+        '/hook.webHook/hookGet',
+        request_serializer=hook__pb2.Hook.SerializeToString,
+        response_deserializer=hook__pb2.Response.FromString,
+        )
 
 
 class webHookServicer(object):
@@ -44,6 +49,13 @@ class webHookServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
+  def hookGet(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
 
 def add_webHookServicer_to_server(servicer, server):
   rpc_method_handlers = {
@@ -55,6 +67,11 @@ def add_webHookServicer_to_server(servicer, server):
       'hookUpdate': grpc.unary_unary_rpc_method_handler(
           servicer.hookUpdate,
           request_deserializer=hook__pb2.User.FromString,
+          response_serializer=hook__pb2.Response.SerializeToString,
+      ),
+      'hookGet': grpc.unary_unary_rpc_method_handler(
+          servicer.hookGet,
+          request_deserializer=hook__pb2.Hook.FromString,
           response_serializer=hook__pb2.Response.SerializeToString,
       ),
   }

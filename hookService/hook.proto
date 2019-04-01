@@ -6,7 +6,7 @@ service webHook{
 
 rpc hookCreate (User) returns (Response) {}
 rpc hookUpdate (User) returns (Response) {}
-
+rpc hookGet (Hook) returns (Response) {}
 }
 
 message User{
@@ -19,5 +19,11 @@ string link = 2;
 message Response{
 
 string response = 1;
+
+}
+
+message Hook{
+
+string username = 1;
 
 }

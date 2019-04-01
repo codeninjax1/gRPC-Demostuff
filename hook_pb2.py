@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='hook',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\nhook.proto\x12\x04hook\"&\n\x04User\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x0c\n\x04link\x18\x02 \x01(\t\"\x1c\n\x08Response\x12\x10\n\x08response\x18\x01 \x01(\t2a\n\x07webHook\x12*\n\nhookCreate\x12\n.hook.User\x1a\x0e.hook.Response\"\x00\x12*\n\nhookUpdate\x12\n.hook.User\x1a\x0e.hook.Response\"\x00\x62\x06proto3')
+  serialized_pb=_b('\n\nhook.proto\x12\x04hook\"&\n\x04User\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x0c\n\x04link\x18\x02 \x01(\t\"\x1c\n\x08Response\x12\x10\n\x08response\x18\x01 \x01(\t\"\x18\n\x04Hook\x12\x10\n\x08username\x18\x01 \x01(\t2\x8a\x01\n\x07webHook\x12*\n\nhookCreate\x12\n.hook.User\x1a\x0e.hook.Response\"\x00\x12*\n\nhookUpdate\x12\n.hook.User\x1a\x0e.hook.Response\"\x00\x12\'\n\x07hookGet\x12\n.hook.Hook\x1a\x0e.hook.Response\"\x00\x62\x06proto3')
 )
 
 
@@ -93,8 +93,40 @@ _RESPONSE = _descriptor.Descriptor(
   serialized_end=88,
 )
 
+
+_HOOK = _descriptor.Descriptor(
+  name='Hook',
+  full_name='hook.Hook',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='username', full_name='hook.Hook.username', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=90,
+  serialized_end=114,
+)
+
 DESCRIPTOR.message_types_by_name['User'] = _USER
 DESCRIPTOR.message_types_by_name['Response'] = _RESPONSE
+DESCRIPTOR.message_types_by_name['Hook'] = _HOOK
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 User = _reflection.GeneratedProtocolMessageType('User', (_message.Message,), dict(
@@ -111,6 +143,13 @@ Response = _reflection.GeneratedProtocolMessageType('Response', (_message.Messag
   ))
 _sym_db.RegisterMessage(Response)
 
+Hook = _reflection.GeneratedProtocolMessageType('Hook', (_message.Message,), dict(
+  DESCRIPTOR = _HOOK,
+  __module__ = 'hook_pb2'
+  # @@protoc_insertion_point(class_scope:hook.Hook)
+  ))
+_sym_db.RegisterMessage(Hook)
+
 
 
 _WEBHOOK = _descriptor.ServiceDescriptor(
@@ -119,8 +158,8 @@ _WEBHOOK = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=90,
-  serialized_end=187,
+  serialized_start=117,
+  serialized_end=255,
   methods=[
   _descriptor.MethodDescriptor(
     name='hookCreate',
@@ -137,6 +176,15 @@ _WEBHOOK = _descriptor.ServiceDescriptor(
     index=1,
     containing_service=None,
     input_type=_USER,
+    output_type=_RESPONSE,
+    serialized_options=None,
+  ),
+  _descriptor.MethodDescriptor(
+    name='hookGet',
+    full_name='hook.webHook.hookGet',
+    index=2,
+    containing_service=None,
+    input_type=_HOOK,
     output_type=_RESPONSE,
     serialized_options=None,
   ),

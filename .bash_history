@@ -18,3 +18,10 @@ clear
 sudo su
 sduo su
 sudo su
+sduo su
+clear
+sudo su
+clear
+sudo su
+sduo su
+sudo su

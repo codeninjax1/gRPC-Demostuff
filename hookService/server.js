@@ -1,10 +1,13 @@
 var redis = require('redis');
+
+var bluebird = require('bluebird');
+bluebird.promisifyAll(redis.RedisClient.prototype);
+
 var grpc = require('grpc');
 
 var hookProto = grpc.load('hook.proto');
 
 var server = new grpc.Server();
-
 
 var result = {"response":"success"};
 console.log(result);
@@ -19,29 +22,36 @@ conn.on("error", function(){
 console.log("Error connecting to Redis");
 });
 
-conn.set("key1","value2",redis.print);
-conn.get("key1", function (error,result){
-if (error){
-console.log(error);
-throw error;
+var set_hook = function(name,hook) {
+conn.set(name,hook,redis.print);
+console.log("Set hook success");
 }
-console.log("GET result ->"+result);
-});
 
-conn.append("key1","value2");
-conn.del("key1", function (error,result){
-if (error){
-console.log(error);
-throw error;
+var get_hook = function(name,callback) {
+var result = conn.getAsync(name).then(function(hook) {
+	console.log("in get hook -> "+hook)
+	return hook;
+    });
+return Promise.all([result]);
 }
-console.log("GET result ->"+result);
-});
 
 server.addService(hookProto.hook.webHook.service, {
+
 	hookCreate: function(call,callback) {
-	      console.log(call.request.username);
+	      console.log(call.request.username,call.request.link);
+	      set_hook(call.request.username,call.request.link)
               callback(null,result);
-	}
+	},
+	 
+	hookGet: function(call,callback) {
+		console.log("in hookGet");
+                username = call.request.username;
+		console.log(username);
+		var output = get_hook(username).then(function(hook){
+		console.log("result "+ hook[0]);
+		callback(null,{"response":hook[0]});
+		});
+        }
 
 });
 
