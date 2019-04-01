@@ -1,4 +1,5 @@
 import redis
+import json
 
 class connectRedis:
 
@@ -9,13 +10,14 @@ class connectRedis:
         self.redis_client = redis.StrictRedis(host=self.host,port=self.port,decode_responses=True)
 
     # Save username and password to redis
-    def saveUser(self,username,password):
+    def saveUser(self,username,token,key):
         try:
-            result = self.redis_client.set(username,password)
-            return result
+            values = json.dumps({"username":username,"key":key})
+            result = self.redis_client.set(token,values)
+            return token
         except Exception as e:
             print(e)
-            return False
+            return {}
 
     # Retrieve password of the user
     def getPassword(self,username):

@@ -18,6 +18,6 @@ string password = 2;
 
 message Response{
 
-bool response = 1;
+string response = 1;
 
 }

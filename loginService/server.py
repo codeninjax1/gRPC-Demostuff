@@ -3,7 +3,9 @@ import user_pb2
 import user_pb2_grpc
 import time
 from concurrent import futures
+from token_management import new_token
 from connect_redis import connectRedis
+import json
 
 class userLoginService(user_pb2_grpc.userLoginServicer):
     
@@ -16,17 +18,18 @@ class userLoginService(user_pb2_grpc.userLoginServicer):
         password = request.password
         print(name)
         print(password)
-        result = self.redis.saveUser(name,password)
-        
-        result_success = {"response":True}
-        result_fail = {"response":False}
+        token = new_token(name,password)       
+        result = self.redis.saveUser(name,token["token"],token["hash"]).decode("utf-8")
+        print(result)
+        result_success = {"response":result}
+        result_fail = {"response":"failed"}
 
-        if result:
+        if result != {}:
             return user_pb2.Response(**result_success)
         else:
             return user_pb2.Response(**result_fail) 
 
-        return user_pb2.Response(**result)
+       # return user_pb2.Response(**result)
 
     def userAuth(self,request,context):
         name = request.username

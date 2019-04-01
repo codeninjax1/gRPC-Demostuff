@@ -13,7 +13,9 @@ class UserCreate(object):
         data = json.loads(data)
         username = data["username"]
         password = data["password"]
-        self.conn.register(username,password)
+        response = self.conn.register(username,password)
+        print("in post",response)
+        resp.body = json.dumps({"token":response})
         #self.conn.authenticate(username,password)
 
 class UserAuth(object):
