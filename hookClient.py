@@ -21,6 +21,7 @@ class Client(object):
         output = result.response
         print("in client hook function")
         print(output)
+        return output
 
 if __name__ == "__main__":
     c = Client()
