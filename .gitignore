@@ -1,0 +1,8 @@
+.cache/
+.ssh/
+.bash_history
+.bash_logout
+.hookClient.py.swp
+.profile
+.sudo_as_admin_successful
+.viminfo
