@@ -31,4 +31,15 @@ class connectRedis:
             print(e)
             return ""
 
+    def authenticate_token(self,token):
+        try:
+            result = self.redis_client.get(token)
+            if result == None:
+                print("Token does not exist")
+                return ""
+            return result
+        except Exception as e:
+            print(e)
+            return ""
+
 

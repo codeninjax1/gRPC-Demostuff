@@ -6,6 +6,7 @@ service userLogin{
 
 rpc userCreate (User) returns (Response) {}
 rpc userAuth (User) returns (Response) {}
+rpc tokenAuth(Token) returns (Response) {}
 
 }
 
@@ -19,5 +20,11 @@ string password = 2;
 message Response{
 
 string response = 1;
+
+}
+
+message Token {
+
+string token = 1;
 
 }

@@ -27,6 +27,16 @@ class Client(object):
         print("auth")
         return result.response
 
+    def authenticate_token(self,token):
+
+        message = {"token":token}
+        print(token)
+        data = user_pb2.Token(**message)
+        result = self.stub.tokenAuth(data)
+        print("in client")
+        print(result.response)
+        return result.response
+
 #client = Client()
 #client.register("harish","test1")
 #client.authenticate("harish","test")

@@ -25,11 +25,9 @@ class UserAuth(object):
     def on_post(self,req,resp):
         data =req.stream.read()
         data =json.loads(data)
-        username = data["username"]
-        password = data["password"]
-        result = self.conn.authenticate(username,password)
-
-        if result == True:
+        token = data["token"]
+        result = self.conn.authenticate_token(token)
+        if result == "success":
             resp.body = json.dumps({"result":"Auth Success","status":"success"})
             return
         else:

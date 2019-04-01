@@ -32,19 +32,27 @@ class userLoginService(user_pb2_grpc.userLoginServicer):
        # return user_pb2.Response(**result)
 
     def userAuth(self,request,context):
-        name = request.username
-        password = request.password
-        print(name)
-        print(password)
-        auth_success = {"response":True}
-        auth_fail = {"response":False}
+        token = request.token
+        print(token)
+        auth_success = {"response":"success"}
+        auth_fail = {"response":"failed"}
 
-        result = self.redis.getPassword(name)
+        result = self.redis.getPassword(token)
         print("auth response",result==password)
-        if password==result:
+        if result!="":
             return user_pb2.Response(**auth_success)
-        elif result=="":
+        else:
             return user_pb2.Response(**auth_fail)
+
+    def tokenAuth(self,request,context):
+        token = request.token
+        auth_success = {"response":"success"}
+        auth_fail = {"response":"failed"}
+        result = self.redis.authenticate_token(token)
+        print("token auth")
+        print(result)
+        if result != "":
+            return user_pb2.Response(**auth_success)
         else:
             return user_pb2.Response(**auth_fail)
     

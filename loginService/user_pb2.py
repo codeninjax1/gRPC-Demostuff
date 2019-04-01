@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='user',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\nuser.proto\x12\x04user\"*\n\x04User\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x10\n\x08password\x18\x02 \x01(\t\"\x1c\n\x08Response\x12\x10\n\x08response\x18\x01 \x01(\t2a\n\tuserLogin\x12*\n\nuserCreate\x12\n.user.User\x1a\x0e.user.Response\"\x00\x12(\n\x08userAuth\x12\n.user.User\x1a\x0e.user.Response\"\x00\x62\x06proto3')
+  serialized_pb=_b('\n\nuser.proto\x12\x04user\"*\n\x04User\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x10\n\x08password\x18\x02 \x01(\t\"\x1c\n\x08Response\x12\x10\n\x08response\x18\x01 \x01(\t\"\x16\n\x05Token\x12\r\n\x05token\x18\x01 \x01(\t2\x8d\x01\n\tuserLogin\x12*\n\nuserCreate\x12\n.user.User\x1a\x0e.user.Response\"\x00\x12(\n\x08userAuth\x12\n.user.User\x1a\x0e.user.Response\"\x00\x12*\n\ttokenAuth\x12\x0b.user.Token\x1a\x0e.user.Response\"\x00\x62\x06proto3')
 )
 
 
@@ -93,8 +93,40 @@ _RESPONSE = _descriptor.Descriptor(
   serialized_end=92,
 )
 
+
+_TOKEN = _descriptor.Descriptor(
+  name='Token',
+  full_name='user.Token',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='token', full_name='user.Token.token', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=94,
+  serialized_end=116,
+)
+
 DESCRIPTOR.message_types_by_name['User'] = _USER
 DESCRIPTOR.message_types_by_name['Response'] = _RESPONSE
+DESCRIPTOR.message_types_by_name['Token'] = _TOKEN
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 User = _reflection.GeneratedProtocolMessageType('User', (_message.Message,), dict(
@@ -111,6 +143,13 @@ Response = _reflection.GeneratedProtocolMessageType('Response', (_message.Messag
   ))
 _sym_db.RegisterMessage(Response)
 
+Token = _reflection.GeneratedProtocolMessageType('Token', (_message.Message,), dict(
+  DESCRIPTOR = _TOKEN,
+  __module__ = 'user_pb2'
+  # @@protoc_insertion_point(class_scope:user.Token)
+  ))
+_sym_db.RegisterMessage(Token)
+
 
 
 _USERLOGIN = _descriptor.ServiceDescriptor(
@@ -119,8 +158,8 @@ _USERLOGIN = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=94,
-  serialized_end=191,
+  serialized_start=119,
+  serialized_end=260,
   methods=[
   _descriptor.MethodDescriptor(
     name='userCreate',
@@ -137,6 +176,15 @@ _USERLOGIN = _descriptor.ServiceDescriptor(
     index=1,
     containing_service=None,
     input_type=_USER,
+    output_type=_RESPONSE,
+    serialized_options=None,
+  ),
+  _descriptor.MethodDescriptor(
+    name='tokenAuth',
+    full_name='user.userLogin.tokenAuth',
+    index=2,
+    containing_service=None,
+    input_type=_TOKEN,
     output_type=_RESPONSE,
     serialized_options=None,
   ),
