@@ -18,8 +18,9 @@ class userLoginService(user_pb2_grpc.userLoginServicer):
         password = request.password
         print(name)
         print(password)
-        token = new_token(name,password)       
-        result = self.redis.saveUser(name,token["token"],token["hash"]).decode("utf-8")
+        token = new_token(name,password)
+        print(token["token"],token["hash"])
+        result = self.redis.saveUser(name,token["token"],token["hash"].decode("utf-8"))
         print(result)
         result_success = {"response":result}
         result_fail = {"response":"failed"}

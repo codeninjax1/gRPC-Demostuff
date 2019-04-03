@@ -11,6 +11,17 @@ class connectRedis:
 
     # Save username and password to redis
     def saveUser(self,username,token,key):
+
+        #Optimize the iteration
+        # Check if user already exist
+        keys = self.redis_client.keys()
+        for key in keys:
+            data = self.redis_client.get(key)
+            data = json.loads(data)
+            if type(data) is dict and "username" in data.keys() and data["username"]==username:
+                print("delete this entry")
+                print(data)
+                self.redis_client.delete(key)
         try:
             values = json.dumps({"username":username,"key":key})
             result = self.redis_client.set(token,values)
@@ -23,6 +34,7 @@ class connectRedis:
     def getPassword(self,username):
         try:
             result = self.redis_client.get(username)
+            print("get passwd",result)
             if result == "":
                 print("User Does not exist")
                 return ""
