@@ -4,6 +4,21 @@ from client import Client
 import hookClient
 from celery_app import delay_one_min
 
+def authenticate(function):
+    client = Client()
+    def dummy(check,req,resp,*args):
+        print("authenticating token ...")
+        token = req.headers["TOKEN"]
+        print(token)
+        authenticate = client.authenticate_token(token)
+        print(authenticate)
+        if authenticate == "success":
+            return function(check,req,resp)
+        else:
+            resp.body = json.dumps({"message":"Authentication failed","status":"failed"})
+            return
+    return dummy
+
 class UserCreate(object):
     def __init__(self):
         self.conn = Client()
@@ -25,9 +40,11 @@ class UserAuth(object):
     def on_post(self,req,resp):
         data =req.stream.read()
         data =json.loads(data)
-        token = data["token"]
-        result = self.conn.authenticate_token(token)
-        if result == "success":
+        username = data["username"]
+        password = data["password"]
+        result = self.conn.authenticate(username,password)
+
+        if result == True:
             resp.body = json.dumps({"result":"Auth Success","status":"success"})
             return
         else:
@@ -37,6 +54,8 @@ class UserAuth(object):
 class Hook(object):
     def __init__(self):
         self.client = hookClient.Client()
+
+    @authenticate
     def on_post(self,req,resp):
         print("in hook client")
         data =req.stream.read()
